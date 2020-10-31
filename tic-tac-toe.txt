@@ -1,0 +1,5 @@
+My log of what I did for tic tac toe hw.
+
+made a template of project using npx create-react-app projname
+created a github repo, and made sure my git commits were up to date
+
