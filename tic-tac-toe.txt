@@ -1,5 +1,13 @@
 My log of what I did for tic tac toe hw.
 
 made a template of project using npx create-react-app projname
-created a github repo, and made sure my git commits were up to date
+created a github repo, and made sure my git commits were up to date - will be committing throughout proj and won't mention here for simplicity sake
+cleared src/ contents and replaced with tutorial starter code
+added feature where squares are rendered with their number
+added feature where upon render of square the square's onClick is bound to function that changes contents inside to an X
+added constructor for square class, and a states object called display that keeps track of whats in the square
+added array to board class to keep track of status of whats in each square
+passed onclick function for square from board to square in order to have each square class update their value in board's array
+now must define the handleclcik function in board for onclick for square to work
+
 
