@@ -8,6 +8,9 @@ added feature where upon render of square the square's onClick is bound to funct
 added constructor for square class, and a states object called display that keeps track of whats in the square
 added array to board class to keep track of status of whats in each square
 passed onclick function for square from board to square in order to have each square class update their value in board's array
-now must define the handleclcik function in board for onclick for square to work
-
+defined the handleclick function in board for onclick for square to work
+replaced square class with a function because its simpler
+added a inverter to switch between adding X and O
+added a function check winner and winner display if someone wins
+added if statement to prevent someone from changing a square already edited or if game over
 
