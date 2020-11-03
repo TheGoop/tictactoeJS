@@ -1,0 +1,4 @@
+Log:
+
+started with tic tac toe (stuff detailed in tic-tac-toe.txt)
+
