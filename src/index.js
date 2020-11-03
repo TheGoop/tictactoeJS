@@ -44,6 +44,20 @@ import './index.css';
       }
   }
 
+  function isNextTo(curr, i)
+  {
+      //reduce to row
+      let x = Math.abs(Math.floor(i/3) - Math.floor(curr/3))
+      //reduce to col
+      let y = Math.abs(curr % 3 - i % 3)
+
+      if (x <= 1 && y <= 1)
+      {
+          return true
+      }
+      return false
+  }
+
   function calculateWinner(squares) {
     const lines = [
       [0, 1, 2],
@@ -79,17 +93,69 @@ import './index.css';
 
     handleClick(i)
     {
+        
         //create a copy of squares to modify
         const squares = this.state.squares.slice();
 
+        if (calculateWinner(squares))
+        {
+            return;
+        }
 
         //if after 3 moves different behavior from normal
         if (after3Moves(this.state.turn, this.state.xNext))
         {
-            //if a piece has already been selected
+            //if a valid piece has already been selected by player
             if (this.state.select && isNaN(this.state.selectedPiece) === false)
             {
-                
+                //if player has selected an occupied place by either him or the other 
+                // player he can't move there - he must redo everything
+
+                //if square he wants to move to is occupied
+                if (this.state.squares[i])
+                {
+                    //reset his selection and make him redo his move
+                    this.setState({
+                        select:false,
+                        selectedPiece:NaN,
+                    });
+                    console.log("selection made but occupied square")
+                    return
+                }
+                //else square is unoccupied 
+                else
+                {
+                    //but is the square to move to next to selectedPiece?
+                    if (isNextTo(i, this.state.selectedPiece))
+                    {
+                        //make the move
+                        //copy the array to modify
+                        const copy = this.state.squares.slice()
+                        copy[this.state.selectedPiece] = null
+                        copy[i] = this.state.xNext ? 'X' : 'O';
+
+                        this.setState({
+                            squares: copy,
+                            xNext: !this.state.xNext,
+                            turn: this.state.turn + 1,
+                            select: false,
+                            selectedPiece: NaN,
+                        });
+
+                        console.log("valid selection and move finish")
+                        return
+                    }
+                    else
+                    {
+                        //reset his selection and make him redo his move
+                        this.setState({
+                            select:false,
+                            selectedPiece:NaN,
+                        });
+                        console.log("valid selection but move is too far")
+                        return
+                    }
+                }
             }
 
             //else a piece has not already been selected by player
@@ -114,17 +180,39 @@ import './index.css';
                             select:true,
                             selectedPiece:i,
                         })
+                        console.log("valid selection, player doesn't control mid")
+                        return
                     }
 
                     //if the mid position is his, but he chosen to not select it
                     else if (this.state.squares[mid] === player && mid !== i)
                     {
-//MUST FIX HE CAN PLACE IF ITS A WINNING MOVE                        
-                        //he will have to try again at selecting
+                        /** 
+                        //make a copy of array
+                        const copy2 = this.state.squares.slice()
+                        copy2[this.state.selectedPiece] = null
+                        console.log(this.state.squares)
+                        copy2[i] = this.state.xNext ? 'X' : 'O';
+                        console.log(copy2)
+                        //if it is a winning move, then he can play the move
+                        if (calculateWinner(copy2))
+                        {
+                            this.setState({
+                                squares: copy2,
+                                xNext: !this.state.xNext,
+                                turn: this.state.turn + 1,
+                            });
+                            return
+                        }
+                        */ 
+
+                        
+
                         this.setState({
                             select:false,
                             selectedPiece:NaN,
                         });
+                        console.log("invalid selection, player must select mid bc he controls middle")
                         return
                     }
                     //else, the mid position is his and he chosen to selected it
@@ -135,6 +223,7 @@ import './index.css';
                             select:true,
                             selectedPiece : mid,
                         });
+                        console.log("valid selection of middle, player controls mid")
                         return
 
                     }
@@ -147,6 +236,7 @@ import './index.css';
                         select:false,
                         selectedPiece:NaN,
                     });
+                    console.log("invalid selection - selection of piece not yours")
                     return
                 }
 
@@ -184,7 +274,6 @@ import './index.css';
         if (winner) {
         status = 'Winner: ' + winner;
         } else {
-            console.log(this.state.xNext)
         status = 'Next player: ' + (this.state.xNext ? 'X' : 'O');
         }
 
