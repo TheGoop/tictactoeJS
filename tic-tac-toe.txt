@@ -13,4 +13,19 @@ replaced square class with a function because its simpler
 added a inverter to switch between adding X and O
 added a function check winner and winner display if someone wins
 added if statement to prevent someone from changing a square already edited or if game over
+added game component that keeps track of history of game
+now, with new game component get rid of board constructor
+have the board renderSquare pass to square the squares array and onClick atrributes from properties
+update game's render function so it'll use history attributes most recent array for game status (last val in arr)
+remove board's render code for game status - just needs to pass data to squares
+move handleclick from board to game, and have it append game states to history
+    concat doesn't mutate array, so we use concat not push
+now, use maps to map turn number to game state
+add to game render function in the return to dynamically generate list items (each item corresponds to turn number)
+add attribute stepNumber to keep track of turns into the game
+define function jumpTo to handle incrementing to next turn
+update handleClick, to where if we go back in time and then make a move we can discard the would be future states
+make the Game's render function render current status not last status
+
+
 

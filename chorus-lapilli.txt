@@ -1,4 +1,9 @@
 Log:
 
 started with tic tac toe (stuff detailed in tic-tac-toe.txt)
+made a function to tell if a player has been 3 moves in or not: after3Moves()
+Added attributes to board,
+ - turn: tracks turn number
+ - select: tracks if piece is selected
+ - selectedPiece: index of selected selectedPiece
 
